@@ -124,3 +124,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # OpenWeatherMap API key
 OPENWEATHERMAP_API_KEY = '6695b23a2d750441dc9bd3d0eba19c24'  # <-- Новый ключ пользователя
+print("ALLOWED_HOSTS", ALLOWED_HOSTS)
