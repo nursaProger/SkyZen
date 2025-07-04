@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyZen — Прогноз погоды</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%); min-height: 100vh; }
+        .weather-card {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 100%;
+        }
+        @media (max-width: 576px) {
+            .weather-card {
+                padding: 1rem;
+                margin: 1rem 0.5rem;
+                max-width: 100%;
+            }
+            .weather-icon { width: 60px; }
+            h2 { font-size: 1.5rem; }
+            h4 { font-size: 1.1rem; }
+        }
+        .weather-icon { width: 80px; }
+        .input-group > .form-control, .input-group > .btn {
+            font-size: 1rem;
+            min-height: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <h2 class="text-center mb-4">SkyZen</h2>
+            <form id="searchForm" class="mb-3">
+                <div class="input-group">
+                    <input type="text" id="cityInput" class="form-control" placeholder="Введите город..." required>
+                    <button class="btn btn-primary" type="submit">Поиск</button>
+                </div>
+            </form>
+            <div id="weatherResult" class="text-center"></div>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('searchForm');
+        const cityInput = document.getElementById('cityInput');
+        const resultDiv = document.getElementById('weatherResult');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const city = cityInput.value.trim();
+            if (!city) return;
+            resultDiv.innerHTML = '<div class="spinner-border text-primary" role="status"></div>';
+            fetch(`/api/?city=${encodeURIComponent(city)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        resultDiv.innerHTML = `<div class='alert alert-danger'>${data.error}</div>`;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <h4>${data.city}</h4>
+                            <img class="weather-icon" src="https://openweathermap.org/img/wn/${data.icon}@2x.png" alt="icon">
+                            <p><b>${data.description}</b></p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Температура: <b>${data.temperature}°C</b></li>
+                                <li class="list-group-item">Влажность: <b>${data.humidity}%</b></li>
+                                <li class="list-group-item">Ветер: <b>${data.wind} м/с</b></li>
+                            </ul>
+                        `;
+                    }
+                })
+                .catch(() => {
+                    resultDiv.innerHTML = `<div class='alert alert-danger'>Ошибка запроса к серверу</div>`;
+                });
+        });
+    </script>
+</body>
+</html> 
