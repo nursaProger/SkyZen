@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-w$z5lzo%q9deu_(ks&c7pg7o=sa@w26fd6s%i63@%^@=wxh3ym
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['asphaltsky.pythonanywhere.com']
-
+ALLOWED_HOSTS = ['asphaltsky.pythonanywhere.com', '127.0.0.1', 'localhost', '0.0.0.0']
+    
 
 # Application definition
 
@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'weather.middleware.VisitorTrackingMiddleware',
 ]
 
 ROOT_URLCONF = 'SkyZen.urls'
