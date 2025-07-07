@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-w$z5lzo%q9deu_(ks&c7pg7o=sa@w26fd6s%i63@%^@=wxh3ym
 DEBUG = True
 
 ALLOWED_HOSTS = ['asphaltsky.pythonanywhere.com', '127.0.0.1', 'localhost', '0.0.0.0']
+
+# Настройки для PythonAnywhere
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/AsphaltSky/static'
     
 
 # Application definition
@@ -117,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# Удалено дублирующее определение STATIC_URL, STATIC_ROOT и STATICFILES_DIRS
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
